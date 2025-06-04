@@ -1,0 +1,38 @@
+body{
+    background:linear-gradient(to left, rgb(0, 0, 0), rgb(2, 4, 32),rgb(0, 0, 0));
+    color: white;
+    margin: auto;
+    text-align: center;
+}
+h1{
+    font-size: 70px;
+    color: white;
+}
+.board-row{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    cursor:pointer;
+}
+.board-container{
+    margin: auto;
+    width: 50dvh;
+    border-color: rgb(1, 239, 160);
+    
+}
+.Reset{
+    cursor:pointer;
+    margin: 25px;
+    padding: 10px;
+    padding-left: 20px;
+     padding-right: 20px;
+    font-size: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: antiquewhite;
+    background-color: transparent;
+    outline: none;
+    border: 3px solid;
+    border-radius: 20px;
+    border-color: rgba(127, 255, 212, 0.395);
+
+}
