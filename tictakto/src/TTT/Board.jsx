@@ -53,7 +53,7 @@ const Board = () => {
           isWinner ? <>
           <h2 style={{color:"lightblue"}}>
             "Boyahhhhhh! player {isWinner} Won "
-            </h2> <button className='Reset'>Replay</button>
+            </h2> <button onclick={handleReset} className='Reset'>Replay</button>
           </> : (<>
           <div className="container">
           <Square onClick={() => handleState(0)} value={array[0]} />
