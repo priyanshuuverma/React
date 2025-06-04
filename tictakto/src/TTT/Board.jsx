@@ -1,10 +1,33 @@
 import React, { useState } from 'react'
 import Square from './Square'
-import './Sq.css'
+import '../App.css'
 const Board = () => {
-  const [stat, setStat] = useState(Array(9).fill(null))
-  const checkWinner = () => {
-    const winnerLogic = [
+  const [playerO, setPlayerO] = useState(0);
+   const [playerX, setPlayerX] = useState(0);
+  const [array, setArray] = useState(Array(9).fill(null))
+  const [xturn, setXturn] = useState(false)
+  const [counter, setCounter] = useState(0);
+  const handleState= (ind) =>{
+    if(array[ind] != null){
+      return
+    }
+    const copy = [...array];
+    copy[ind] =  xturn ? "X" : "O";
+    setArray(copy);
+    setCounter(counter+1)
+    setXturn(!xturn);       
+    if(counter == 8){
+      setArray(Array(9).fill(null));
+      setCounter(0);
+    }  
+    console.log(counter)
+  }
+  const handleReset =() => {
+    setArray(Array(9).fill(null))
+    setCounter(0)
+  }
+  const winnerLogic  = () => {
+    const checkWin = [
       [0,1,2],
       [3,4,5],
       [6,7,8],
@@ -13,56 +36,47 @@ const Board = () => {
       [2,5,8],
       [0,4,8],
       [2,4,6],
-    ];
-    for(let logic of winnerLogic){
-      const [ a,b,c]  = logic;
-      if(stat[a] !== null && stat[a] == stat[b] && stat[a]==stat[c]){
-        return stat[a];
+    ]
+    for(let logic of checkWin){
+      const[a,b,c] = logic;
+      if(array[a] != null && array[a] == array[b] && array[a] == array[c]){
+         return array[a]
       }
-    
     }
-      return false;
+    return false;
   }
-  const isWinner = checkWinner();
-  
-  const [isXTurn, setIsXTurn] = useState(false);
-  const handleClick = (index) => {
-    if(stat[index] != null){
-      return;
-    }
-    index.preventDefault;
-    const copyS = [...stat];
-    copyS[index] = isXTurn ? 'X' : 'O';
-    setStat(copyS);
-    setIsXTurn(!isXTurn)
-  }
-  const handleReset  = () => {
-    setStat(Array(9).fill(null))
-  }
+  const isWinner = winnerLogic();
   return (
-    <div className='board-container'>
+    <div>
+      <div className='board-container'>
         {
-          isWinner ? <>Player {isWinner} won the game <button className='Reset' onClick={handleReset}>Start Again</button></>:(
-            <>
-            <div className="board-row">
-            <Square onClick={() => handleClick(0)} value={stat[0]} />
-            <Square onClick={() => handleClick(1)} value={stat[1]} />
-            <Square onClick={() => handleClick(2)} value={stat[2]}/>
+          isWinner ? <>
+          <h2 style={{color:"lightblue"}}>
+            "Boyahhhhhh! player {isWinner} Won "
+            </h2> <button className='Reset'>Replay</button>
+          </> : (<>
+          <div className="container">
+          <Square onClick={() => handleState(0)} value={array[0]} />
+          <Square onClick={() => handleState(1)}  value={array[1]} />
+          <Square onClick={() => handleState(2)}  value={array[2]} />
         </div>
-        <div className="board-row">
-            <Square onClick={() => handleClick(3)} value={stat[3]}/>
-            <Square onClick={() => handleClick(4)} value={stat[4]}/>
-            <Square onClick={() => handleClick(5)} value={stat[5]}/>
+        <div className="container">
+          <Square onClick={() => handleState(3)}  value={array[3]} />
+          <Square onClick={() => handleState(4)}  value={array[4]} />
+          <Square onClick={() => handleState(5)}  value={array[5]} />
         </div>
-        <div className="board-row">
-            <Square onClick={() => handleClick(6)} value={stat[6]}/>
-            <Square onClick={() => handleClick(7)} value={stat[7]}/>
-            <Square onClick={() => handleClick(8)} value={stat[8]}/>
-        </div>   
-        <button className='Reset' onClick={handleReset}>Restart</button>
-            </>
-          )
-        }   
+        <div className="container">
+          <Square onClick={() => handleState(6)}  value={array[6]} />
+          <Square onClick={() => handleState(7)}  value={array[7]} />
+          <Square  onClick={() => handleState(8)}  value={array[8]}/>
+        </div>
+         <button onClick={handleReset} className='Reset'>
+        Reset
+      </button>
+          </>)
+        }
+      </div>
+    
     </div>
   )
 }
